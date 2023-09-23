@@ -19,6 +19,7 @@
             <th>#</th>
             <th>Type</th>
             <th>Content</th>
+            <th>XP</th>
         </tr>
         </thead>
         <tbody>+
@@ -28,6 +29,7 @@
                     <td class="align-middle">{{ $loop->iteration }}</td>
                     <td class="align-middle">{{ $rs->type }}</td>
                     <td class="align-middle">{{ $rs->content }}</td>
+                    <td class="align-middle">{{ $rs->xp }}</td>
                     <td class="align-middle">
                         <div class="d-flex flex-row">
                             <div class="btn-group" role="group" aria-label="Basic example">

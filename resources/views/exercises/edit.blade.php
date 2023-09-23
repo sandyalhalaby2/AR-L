@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">Type</label>
-                <select name="type" class="form-control" required>
+                <select name="type" class="form-control" required >
                     <option value="" disabled selected>Select Type</option>
                     <option value="translation">Translation</option>
                     <option value="listening">Listening</option>
@@ -20,11 +20,18 @@
                 </select>
             </div>
             <div class="col mb-3">
-                <label class="form-label">Content</label>
-                <input type="text" name="content" class="form-control" placeholder="Content" required value="{{ $exercise->content }}" >
+                <label class="form-label">Xp</label>
+                <input type="text" class="form-control"  name="xp" placeholder="XP" pattern="\d+" required value="{{$exercise->xp}}">
             </div>
-
         </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">Content</label>
+                <textarea type="text" name="content" class="form-control" placeholder="Content" required >{{$exercise->content}}</textarea>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col d-flex justify-content-end"> <!-- Added d-flex and justify-content-end classes -->
                 <button class="btn btn-warning">Update</button>

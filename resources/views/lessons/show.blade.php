@@ -13,7 +13,7 @@
     </div>
     <div class="row">
         <div class="col mb-3">
-            <label class="form-label">Description</label>
+            <label class="form-label">Content</label>
             <textarea class="form-control" name="content" placeholder="Content" readonly>{{ $lesson->content }}</textarea>
         </div>
     </div>

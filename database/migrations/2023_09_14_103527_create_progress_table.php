@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Run the migrations.
      */
@@ -15,11 +16,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')
               ->onDelete('cascade');
+
             $table->foreignId('lesson_id')->constrained('lessons') ;
 
-            $table->foreignId('exercise_id')->constrained('exercises') ;
-
-            $table->enum('completionStatus' , ['completed' , 'progress' , 'not-started']) ;
 
             $table->timestamps();
         });

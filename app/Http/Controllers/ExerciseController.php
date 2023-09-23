@@ -44,8 +44,6 @@ class ExerciseController extends Controller
         $audioPath = null;
 
         if ($request->hasFile('image_link')) {
-//            $image = $request->file('image_link');
-//            $imagePath = $image->store('images', 'public'); // Store in public disk, under 'images' directory
                 $image = $request->file('image_link');
 
                 //Get FileName with extension
@@ -64,10 +62,9 @@ class ExerciseController extends Controller
                 $imagePath = $image->storeAs('images', $NewfileName, 'public');
         }
 
-        // Handle the audio upload
         if ($request->hasFile('audio_link')) {
             $audio = $request->file('audio_link');
-            //Get FileName with extension
+
             $filenameWithExt = $audio->getClientOriginalName();
 
             //Get FileName without Extension
@@ -79,16 +76,26 @@ class ExerciseController extends Controller
             //New_File_Name
             $NewfileName = $filename . '_' . time() . '_.' . $Extension;
 
-            $audioPath = $audio->storeAs('images', $NewfileName, 'public');
+            $audioPath = $audio->storeAs('audios', $NewfileName, 'public');
         }
 
-        Exercise::create([
-            'type' => $request['type'] ,
+// Initialize base data
+        $data = [
+            'type' => $request['type'],
             'content' => $request['content'],
-            'lesson_id'=> $lesson_id ,
-            'image_link' => URL::asset('storage/' . $imagePath),
-            'audio_link' => $audioPath
-        ]);
+            'lesson_id' => $lesson_id,
+            'xp' => $request['xp']
+        ];
+
+        if (!empty($imagePath)) {
+            $data['image_link'] = URL::asset('storage/' . $imagePath);
+        }
+
+        if (!empty($audioPath)) {
+            $data['audio_link'] = URL::asset('storage/' . $audioPath);
+        }
+
+        Exercise::create($data);
 
         return $this->lesson_exercise($lesson_id);
     }

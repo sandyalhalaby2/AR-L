@@ -9,7 +9,9 @@ class Lesson extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name' , 'content'  , 'course_id' ];
+    protected $fillable = ['name' , 'content'  , 'course_id' ,
+//        'order'
+    ];
 
     public function course()
     {
@@ -20,4 +22,6 @@ class Lesson extends Model
     {
         return $this->hasMany(Exercise::class , 'lesson_id');
     }
+
 }
+

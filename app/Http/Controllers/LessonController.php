@@ -28,7 +28,7 @@ class LessonController extends Controller
 
     public function course_lesson($id)
     {
-            $lessons = Lesson::where('course_id' , $id)->orderBy('created_at', 'DESC')->get();
+            $lessons = Lesson::where('course_id' , $id)->orderBy('created_at')->get();
 
             return view('lessons.index', compact(['lessons' , 'id']));
     }
@@ -43,8 +43,9 @@ class LessonController extends Controller
         Lesson::create([
             'name' => $request['name'] ,
             'content' => $request['content'] ,
-            'course_id'=> $course_id
-         ]);
+            'course_id'=> $course_id,
+//            'order' => $request['order']
+        ]);
 
         return $this->course_lesson($course_id);
     }

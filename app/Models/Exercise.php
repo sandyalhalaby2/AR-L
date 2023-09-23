@@ -12,7 +12,8 @@ class Exercise extends Model
         'type',
         'content',
         'audio_link',
-        'image_link'
+        'image_link',
+        'xp'
     ];
 
     public function lesson(): BelongsTo

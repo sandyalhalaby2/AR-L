@@ -11,10 +11,17 @@
             <input type="text" name="type" class="form-control" placeholder="Type" value="{{ $exercise->type }}" readonly>
         </div>
         <div class="col mb-3">
-            <label class="form-label">Content</label>
-            <input type="text" name="content" class="form-control" placeholder="Content" value="{{ $exercise->content }}" readonly>
+            <label class="form-label">Xp</label>
+            <input type="text" name="xp" class="form-control" placeholder="Xp" value="{{ $exercise->xp }}" readonly>
         </div>
     </div>
+    <div class="row">
+        <div class="col mb-3">
+            <label class="form-label">Content</label>
+            <textarea type="text" name="content" class="form-control" placeholder="Content"  readonly>{{ $exercise->content }}</textarea>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col mb-3">
             <label class="form-label">Created At</label>
@@ -26,24 +33,29 @@
         </div>
     </div>
 
-    @if($exercise->image_link)
+    @if($exercise->image_link != null)
         <div class="row mb-3">
             <div class="col">
-                <label class="form-label">Image</label>
-                <img src="{{asset($exercise->image_link) }}" alt="Exercise Image" class="img-fluid">
+                <div class="form-label">Image</div> <!-- Use div instead of label for better layout -->
+                <div>
+                    <img src="{{asset($exercise->image_link) }}" alt="Exercise Image" class="img-fluid">
+                </div>
             </div>
         </div>
     @endif
 
-    @if($exercise->audio_link)
+    @if($exercise->audio_link != null)
         <div class="row mb-3">
             <div class="col">
-                <label class="form-label">Audio</label>
-                <audio controls>
-                    <source src="{{ asset('storage/app/public/'.$exercise->audio_link) }}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+                <div class="form-label">Audio</div> <!-- Use div instead of label for better layout -->
+                <div>
+                    <audio controls>
+                        <source src="{{ asset($exercise->audio_link) }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
             </div>
         </div>
     @endif
+
 @endsection

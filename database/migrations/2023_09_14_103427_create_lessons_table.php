@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name') ;
 
+            $table->text('content')->nullable() ;
+
             $table->foreignId('course_id')->constrained('courses')
                 ->onDelete('cascade') ;
 
-            $table->text('content')->nullable() ;
+//            $table->integer('order')->unique() ;
 
             $table->timestamps();
         });

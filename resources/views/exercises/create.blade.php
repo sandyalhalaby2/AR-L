@@ -17,6 +17,9 @@
                     <option value="multipleChoice">multipleChoice</option>
                 </select>
             </div>
+            <div class="col mb-3">
+                <input type="text" class="form-control"  name="xp" placeholder="XP" pattern="\d+" required>
+            </div>
         </div>
         <div class="row mb-3">
             <div class="col mb-3">

@@ -21,10 +21,11 @@ return new class extends Migration
 
             $table->text('content') ;
 
+            $table->integer('xp') ;
+
             $table->string('audio_link')->nullable();
 
             $table->string('image_link')->nullable();
-
 
             $table->timestamps();
         });

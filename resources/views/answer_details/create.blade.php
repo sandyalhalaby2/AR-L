@@ -5,7 +5,7 @@
 @section('contents')
     <h1 class="mb-0">Answer Details</h1>
     <hr />
-    <form action="{{ route('answer_details.store', ['exercise_id' => $exercise_id]) }}" method="POST" enctype="multipart/form-data" onsubmit="return trimAnswerInput();">
+    <form action="{{ route('answer_details.store', ['exercise_id' => $exercise_id]) }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
         @csrf
         <div class="row mb-3">
             <div class="col mb-3">
@@ -144,11 +144,57 @@
             });
         });
 
-        function trimAnswerInput() {
-            let correctAnswer = document.getElementById("correctAnswerInput");
-            if (correctAnswer) {
-                correctAnswer.value = correctAnswer.value.trim();
+        function validateForm() {
+            const selectedType = document.getElementById('questionType').value;
+
+            if (selectedType === 'multiple_choice') {
+                const question = document.querySelector('textarea[name="question"]').value;
+                const option1 = document.querySelector('input[name="option_1"]').value;
+                const option2 = document.querySelector('input[name="option_2"]').value;
+                const option3 = document.querySelector('input[name="option_3"]').value;
+                const correctAnswer = document.querySelector('select[name="isCorrect"]').value;
+
+                if (!option1 || !option2 || !option3 || !question) {
+                    alert('Please fill in Question and at least Option 1, Option 2, and Option 3.');
+                    return false;
+                }
+
+                if (![option1, option2, option3].includes(correctAnswer)) {
+                    alert('The correct answer must be among the options entered.');
+                    return false;
+                }
+
+            } else if (selectedType === 'fill_in_the_blanks') {
+                const question = document.querySelector('textarea[name="question_fill"]').value;
+                const sentence = document.querySelector('textarea[name="sentence_with_blank"]').value;
+                const correctAnswer = document.querySelector('input[name="correct_answer"]').value;
+
+                if (!question || !sentence || !correctAnswer) {
+                    alert('Please fill in all fields for Fill In the Blanks.');
+                    return false;
+                }
+
+            } else if (selectedType === 'match_the_pairs') {
+                let completePairs = 0;
+
+                for (let i = 1; i <= 5; i++) {
+                    const itemA = document.querySelector('input[name="pair_' + i + '_item_a"]').value;
+                    const itemB = document.querySelector('input[name="pair_' + i + '_item_b"]').value;
+
+                    if (itemA && itemB) {
+                        completePairs++;
+                    } else if ((itemA && !itemB) || (!itemA && itemB)) {
+                        alert('Please complete both Item A and Item B for Pair ' + i);
+                        return false;
+                    }
+                }
+
+                if (completePairs < 3) {
+                    alert('Please fill in at least 3 complete pairs.');
+                    return false;
+                }
             }
+
             return true;
         }
     </script>
