@@ -17,6 +17,9 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
+Route::get('auth/google', [AuthController::class , 'redirectToGoogle']);
+Route::get('auth/google/callback', [AuthController::class,'handleGoogleCallback']);
+
 
 Route::middleware('auth')->group(function () {
 
@@ -29,8 +32,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
     Route::post('/profile',[AuthController::class , 'update'])->name('profile.update');
-
-
 
     Route::controller(\App\Http\Controllers\CourseController::class)->prefix('courses')->group(function () {
         Route::get('', 'index')->name('courses');

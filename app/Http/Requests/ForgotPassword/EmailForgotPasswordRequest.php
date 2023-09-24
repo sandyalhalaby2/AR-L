@@ -23,7 +23,7 @@ class EmailForgotPasswordRequest extends ValidationFormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required| email| exists:users,email',
+            'email' => 'required| email| exists:mobile_users,email',
         ];
     }
 }

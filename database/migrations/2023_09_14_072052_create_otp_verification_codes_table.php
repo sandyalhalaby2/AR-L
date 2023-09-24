@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('otp_verification_codes', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->constrained('users')
+            $table->foreignId('user_id')->constrained('mobile_users')
                 ->onDelete('cascade');
             $table->string('otp');
             $table->timestamp('expire_at')->nullable();

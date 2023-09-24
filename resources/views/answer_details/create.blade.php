@@ -158,11 +158,13 @@
                     alert('Please fill in Question and at least Option 1, Option 2, and Option 3.');
                     return false;
                 }
+                const selectedCorrectOption = document.querySelector('input[name="' + correctAnswer + '"]').value;
 
-                if (![option1, option2, option3].includes(correctAnswer)) {
+                if (![option1, option2, option3].includes(selectedCorrectOption)) {
                     alert('The correct answer must be among the options entered.');
                     return false;
                 }
+
 
             } else if (selectedType === 'fill_in_the_blanks') {
                 const question = document.querySelector('textarea[name="question_fill"]').value;

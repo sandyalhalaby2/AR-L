@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Requests\ForgotPassword\ResetPasswordRequest;
 use App\Http\Requests\Image\ImageRequest;
-use App\Models\User;
+use App\Models\MobileUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +19,7 @@ class ProfileController extends Controller
         try
         {
             $id = Auth::id() ;
-            $user = User::find($id) ;
+            $user = MobileUser::find($id) ;
 
             return response()->json([
                 'user' => $user
@@ -38,7 +38,7 @@ class ProfileController extends Controller
     public function GetUser($id)
     {
         try {
-            $user = User::find($id);
+            $user = MobileUser::find($id);
             if ($user)
             {
                 return response()->json([
@@ -66,7 +66,8 @@ class ProfileController extends Controller
         {
             $user_id = Auth::id() ;
 
-            $user= \App\Models\User::find($user_id)  ;
+            $user= \App\Models\MobileUser::find($user_id)  ;
+
             $Image = new ImageController() ;
 
             if ($user['image']!=null)
@@ -77,7 +78,7 @@ class ProfileController extends Controller
             $path = $Image->store_image_User($request) ;
 
             //create Object in Database
-            $user->update(['image' => URL::asset('storage/' . $path)]);
+            $user->update(['profile_picture' => URL::asset('storage/' . $path)]);
 
             return response()->json([
                     'status' => true ,

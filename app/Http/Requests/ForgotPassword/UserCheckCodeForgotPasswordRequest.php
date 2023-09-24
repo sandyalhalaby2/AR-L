@@ -23,7 +23,7 @@ class UserCheckCodeForgotPasswordRequest extends ValidationFormRequest
     {
         return [
             'code' => 'required |  exists:reset_code_passwords,code',
-            'email' => 'required| email| exists:users,email',
+            'email' => 'required| email| exists:mobile_users,email',
         ];
     }
 }

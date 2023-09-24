@@ -27,7 +27,7 @@ class ImageController extends Controller
         $NewfileName = $filename . '_' . time() . '_.' . $Extension;
 
         //Upload Image
-        $path = $image->storeAs('images', $NewfileName, 'public');
+        return $path = $image->storeAs('images', $NewfileName, 'public');
     }
 
 

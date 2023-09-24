@@ -18,7 +18,7 @@ class RegisterController extends Controller
         try {
 
             //store the user
-            $User = \App\Models\User::create([
+            $User = \App\Models\MobileUser::create([
                 'user_name' => $request['user_name'],
 
                 'email' => $request['email'],
@@ -28,12 +28,14 @@ class RegisterController extends Controller
                 'phone_number' => $request['phone_number']
             ]);
 
-            $otpGenerator = new AuthOtpController();
-            $otpRequest = new generateRequest([
-                'phone_number' => $request['phone_number'], // Assuming 'phone_number' is the mobile number field in your SignUpRequest
-            ]);
-            $otpGenerator->generate($otpRequest) ;
-
+            if($request['phone_number'])
+            {
+                $otpGenerator = new AuthOtpController();
+                $otpRequest = new generateRequest([
+                    'phone_number' => $request['phone_number'], // Assuming 'phone_number' is the mobile number field in your SignUpRequest
+                ]);
+                $otpGenerator->generate($otpRequest);
+            }
             $token = $User->createToken('API TOKEN')->plainTextToken ;
 
             return response()->json([
@@ -59,7 +61,7 @@ class RegisterController extends Controller
         {
             //Normal Email
             $credentials = $request->only('email', 'password');
-            if (!Auth::attempt($credentials))
+            if (!Auth::guard('mobile')->attempt($credentials))
                 return response()->json([
                     'status' => false ,
                     'message' => 'Invalid Data'
@@ -67,7 +69,7 @@ class RegisterController extends Controller
             else
             {
 
-                $User = \App\Models\User::where('email' , $request['email'])->first() ;
+                $User = \App\Models\MobileUser::where('email' , $request['email'])->first() ;
 
                 $token = $User->createToken('API TOKEN')->plainTextToken ;
                 return response() ->json([

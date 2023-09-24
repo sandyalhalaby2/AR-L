@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\api\Controller;
-use App\Models\Exercise;
-use App\Models\MobileUser;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\MobileUser;
 
 class UserController extends Controller
 {

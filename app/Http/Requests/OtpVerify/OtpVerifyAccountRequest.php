@@ -22,7 +22,7 @@ class OtpVerifyAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:mobile_users,id',
             'otp' => 'required'
         ];
     }

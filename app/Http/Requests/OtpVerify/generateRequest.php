@@ -22,7 +22,7 @@ class generateRequest extends ValidationFormRequest
     public function rules(): array
     {
         return [
-            'phone_number' => 'required|exists:users,phone_number'
+            'phone_number' => 'required|exists:mobile_users,phone_number'
         ];
     }
 }

@@ -25,7 +25,7 @@ class EmailResetPasswordRequest extends ValidationFormRequest
         return [
             'code' => 'required|string|exists:reset_code_passwords,code',
             'password' => 'required | confirmed',
-            'email' => 'required| email| exists:users,email',
+            'email' => 'required| email| exists:mobile_users,email',
         ];
     }
 }

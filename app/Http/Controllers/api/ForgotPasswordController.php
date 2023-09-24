@@ -6,8 +6,8 @@ use App\Http\Requests\ForgotPassword\EmailForgotPasswordRequest;
 use App\Http\Requests\ForgotPassword\EmailResetPasswordRequest;
 use App\Http\Requests\ForgotPassword\UserCheckCodeForgotPasswordRequest;
 use App\Mail\SendCodeResetPassword;
+use App\Models\MobileUser;
 use App\Models\ResetCodePassword;
-use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
@@ -17,7 +17,7 @@ class ForgotPasswordController extends Controller
     public function userForgotPassword(EmailForgotPasswordRequest $request){
 
         //Delete all old code that user send before
-        ResetCodePassword::query()->where('email',$request['email']);
+        ResetCodePassword::query()->where('email',$request['email'])->delete();
         //Generate random code
         $data['code']=mt_rand(100000,999999);
 
@@ -77,7 +77,7 @@ class ForgotPasswordController extends Controller
             return response()->json(['Message'=>trans('password code is expire')],422);
         }
         //find users email
-        $user = User::query()->firstWhere('email',$PasswordReset['email']);
+        $user = MobileUser::query()->firstWhere('email',$PasswordReset['email']);
         //update user password
         $input['password'] = bcrypt($input['password']);
         $user->update(['password' => $input['password']]);

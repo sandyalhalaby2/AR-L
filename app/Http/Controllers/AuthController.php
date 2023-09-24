@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\api\Controller;
+use App\Models\MobileUser;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -85,4 +87,31 @@ class AuthController extends Controller
         return view('profile');
     }
 
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        // Check if the user already exists in your database
+        $user = MobileUser::where('email', $googleUser->getEmail())->first();
+
+        if (!$user) {
+            // Create a new user record
+            $user = MobileUser::create([
+                'user_name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+                // You can add more fields as per your user model
+            ]);
+        }
+
+        // Generate a bearer token for the user
+        $token = $user->createToken('api')->plainTextToken;
+
+        // Return the token to the user or perform any desired redirect or response
+        return response()->json(['token' => $token]);
+    }
 }

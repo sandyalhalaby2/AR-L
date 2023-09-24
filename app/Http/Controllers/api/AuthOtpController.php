@@ -4,8 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Requests\OtpVerify\generateRequest;
 use App\Http\Requests\OtpVerifyAccountRequest;
+use App\Models\MobileUser;
 use App\Models\OtpVerificationCode;
-use App\Models\User;
+
 use Carbon\Carbon;
 
 class AuthOtpController extends Controller
@@ -13,7 +14,7 @@ class AuthOtpController extends Controller
 
     public function generateOtp($phone_number)
     {
-        $user = User::where('phone_number', $phone_number)->first();
+        $user = MobileUser::where('phone_number', $phone_number)->first();
 
         # User Does not Have Any Existing OTP
         $verificationCode = OtpVerificationCode::where('user_id', $user->id)->latest()->first();
@@ -63,7 +64,7 @@ class AuthOtpController extends Controller
             ]) ;
         }
 
-        $user = User::find($request['user_id']) ;
+        $user = MobileUser::find($request['user_id']) ;
         $user->update(['email_verified_at' => now()]);
         $verificationCode->delete();
 

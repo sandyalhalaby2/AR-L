@@ -34,27 +34,27 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('api')
-                ->prefix('register')
+                ->prefix('api/register')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/register.php')) ;
 
             Route::middleware(['api' , 'auth:sanctum'])
-                ->prefix('profile')
+                ->prefix('api/profile')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/profile.php')) ;
 
             Route::middleware(['api' , 'auth:sanctum'])
-                ->prefix('course')
+                ->prefix('api/course')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/course.php')) ;
 
             Route::middleware(['api' , 'auth:sanctum'])
-                ->prefix('exercise')
+                ->prefix('api/exercise')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/exercise.php')) ;
 
             Route::middleware(['api' , 'auth:sanctum'])
-                ->prefix('lesson')
+                ->prefix('api/lesson')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/lesson.php')) ;
 

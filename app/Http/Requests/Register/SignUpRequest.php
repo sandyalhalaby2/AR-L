@@ -25,7 +25,7 @@ class SignUpRequest extends ValidationFormRequest
         return [
             'user_name' => 'required|string|max:34',
 
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:mobile_users,email',
 
             'password' => 'required|string|min:8|max:34',
 
