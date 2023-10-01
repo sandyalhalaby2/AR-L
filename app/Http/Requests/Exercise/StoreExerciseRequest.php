@@ -22,7 +22,7 @@ class StoreExerciseRequest extends ValidationFormRequest
     public function rules()
     {
         return [
-            'lesson_id' => 'required|integer|exists:lessons,id', // ensures the lesson_id exists in the lessons table
+            'lesson_id' => 'required|integer|exists:skills,id', // ensures the lesson_id exists in the skills table
             'type' => 'required|in:translation,listening,sentenceFormation,multipleChoice',
             'question' => 'required|string|max:255', // assuming max length of the string is 255
             'audioFilePath' => 'nullable|string|max:255', // assuming max length of the string is 255

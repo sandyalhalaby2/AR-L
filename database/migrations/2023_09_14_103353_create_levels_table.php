@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('achievements', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->constrained('mobile_users')
-                ->onDelete('cascade');
-
             $table->string('name') ;
+
+            $table->text('description')->nullable() ;
 
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievements');
+        Schema::dropIfExists('levels');
     }
 };

@@ -8,17 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Exercise extends Model
 {
     protected $fillable = [
-        'lesson_id',
-        'type',
+        'sub_skill_id',
         'content',
         'audio_link',
         'image_link',
         'xp'
     ];
 
-    public function lesson(): BelongsTo
+    public function sub_skill(): BelongsTo
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(SubSkill::class);
     }
 
     public function multipleChoice()

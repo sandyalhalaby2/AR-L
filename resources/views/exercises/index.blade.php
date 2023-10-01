@@ -17,17 +17,15 @@
         <thead class="table-primary">
         <tr>
             <th>#</th>
-            <th>Type</th>
             <th>Content</th>
             <th>XP</th>
         </tr>
         </thead>
-        <tbody>+
+        <tbody>
         @if($exercises->count() > 0)
             @foreach($exercises as $rs)
                 <tr>
                     <td class="align-middle">{{ $loop->iteration }}</td>
-                    <td class="align-middle">{{ $rs->type }}</td>
                     <td class="align-middle">{{ $rs->content }}</td>
                     <td class="align-middle">{{ $rs->xp }}</td>
                     <td class="align-middle">
@@ -41,7 +39,7 @@
                                     <button class="btn btn-danger m-0">Delete</button>
                                 </form>
                             </div>
-                            <!-- Separate the lessons button with some margin for clarity -->
+                            <!-- Separate the skills button with some margin for clarity -->
                             <a href="{{ route('answer_details', $rs->id) }}" type="button" class="btn btn-primary ml-3">answer details  &rarr;</a>
                         </div>
                     </td>
@@ -50,7 +48,7 @@
             @endforeach
         @else
             <tr>
-                <td class="text-center" colspan="5">Lesson not found</td>
+                <td class="text-center" colspan="5">Exercises not found</td>
             </tr>
         @endif
         </tbody>

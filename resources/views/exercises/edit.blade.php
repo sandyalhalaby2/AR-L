@@ -9,16 +9,7 @@
         @csrf
         @method('PUT')
         <div class="row">
-            <div class="col mb-3">
-                <label class="form-label">Type</label>
-                <select name="type" class="form-control" required >
-                    <option value="" disabled selected>Select Type</option>
-                    <option value="translation">Translation</option>
-                    <option value="listening">Listening</option>
-                    <option value="sentenceFormation">sentenceFormation</option>
-                    <option value="multipleChoice">multipleChoice</option>
-                </select>
-            </div>
+
             <div class="col mb-3">
                 <label class="form-label">Xp</label>
                 <input type="text" class="form-control"  name="xp" placeholder="XP" pattern="\d+" required value="{{$exercise->xp}}">

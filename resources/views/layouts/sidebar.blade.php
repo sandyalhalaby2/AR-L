@@ -17,22 +17,11 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('courses') }}">
+        <a class="nav-link" href="{{ route('levels') }}">
             <i class='fas fa-book-open' ></i>
-            <span>Courses</span></a>
+            <span>Levels</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('allLessons') }}">
-            <i class='far fa-folder-open'></i>
-            <span>Lessons</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('allExercises') }}">
-            <i class='far fa-edit'></i>
-            <span>Exercises</span></a>
-    </li>
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('users') }}">

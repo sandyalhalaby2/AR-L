@@ -23,7 +23,7 @@ class StoreLessonRequest extends ValidationFormRequest
     {
         return [
             'name' => 'required|string|max:50', // assuming max length of the string is 255
-            'course_id' => 'required|integer|exists:courses,id', // ensures the course_id exists in the courses table
+            'course_id' => 'required|integer|exists:levels,id', // ensures the course_id exists in the levels table
             'content' => 'Required|string',
             'permission' => 'required|in:guest,normal,verified,permission',
         ];

@@ -16,9 +16,13 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout')->middleware('auth')->name('logout');
 });
 
-
+//continue with google
 Route::get('auth/google', [AuthController::class , 'redirectToGoogle']);
 Route::get('auth/google/callback', [AuthController::class,'handleGoogleCallback']);
+
+//continue with facebook
+Route::get('/login/facebook',  [AuthController::class , 'redirectToFacebook']);
+Route::get('/login/facebook/callback',  [AuthController::class,'handleFacebookCallback']);
 
 
 Route::middleware('auth')->group(function () {
@@ -33,36 +37,39 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
     Route::post('/profile',[AuthController::class , 'update'])->name('profile.update');
 
-    Route::controller(\App\Http\Controllers\CourseController::class)->prefix('courses')->group(function () {
-        Route::get('', 'index')->name('courses');
-        Route::get('create', 'create')->name('courses.create');
-        Route::post('store', 'store')->name('courses.store');
-        Route::get('show/{id}', 'show')->name('courses.show');
-        Route::get('edit/{id}', 'edit')->name('courses.edit');
-        Route::put('edit/{id}', 'update')->name('courses.update');
-        Route::delete('destroy/{id}', 'destroy')->name('courses.destroy');
+    Route::controller(\App\Http\Controllers\LevelController::class)->prefix('levels')->group(function () {
+        Route::get('', 'index')->name('levels');
+        Route::get('create', 'create')->name('levels.create');
+        Route::post('store', 'store')->name('levels.store');
+        Route::get('show/{id}', 'show')->name('levels.show');
+        Route::get('edit/{id}', 'edit')->name('levels.edit');
+        Route::put('edit/{id}', 'update')->name('levels.update');
+        Route::delete('destroy/{id}', 'destroy')->name('levels.destroy');
     });
 
 
 
 
-    Route::controller(\App\Http\Controllers\LessonController::class)->prefix('lessons')->group(function () {
-        Route::get('','index')->name('allLessons');
-        Route::get('/{id}','course_lesson')->name('lessons');
-        Route::get('create/{id}', 'create')->name('lessons.create');
-        Route::post('store/{id}', 'store')->name('lessons.store');
-        Route::get('show/{id}', 'show')->name('lessons.show');
-        Route::get('edit/{id}', 'edit')->name('lessons.edit');
-        Route::put('edit/{id}', 'update')->name('lessons.update');
-        Route::delete('destroy/{id}', 'destroy')->name('lessons.destroy');
-        Route::post('search', 'search')->name('lessons.search') ;
+    Route::controller(\App\Http\Controllers\SkillController::class)->prefix('skills')->group(function () {
+        Route::get('','index')->name('allSkills');
+        Route::get('/{id}','level_skill')->name('skills');
+        Route::post('search', 'search')->name('skills.search') ;
+    });
+
+    Route::controller(\App\Http\Controllers\SubSkillController::class)->prefix('sub_skills')->group(function () {
+        Route::get('/{id}','Skill_SubSkill')->name('sub_skills') ;
+        Route::get('create/{id}', 'create')->name('sub_skills.create');
+        Route::post('store/{id}', 'store')->name('sub_skills.store');
+        Route::get('show/{id}', 'show')->name('sub_skills.show');
+        Route::get('edit/{id}', 'edit')->name('sub_skills.edit');
+        Route::put('edit/{id}', 'update')->name('sub_skills.update');
+        Route::delete('destroy/{id}', 'destroy')->name('sub_skills.destroy');
+
     });
 
 
-
-    Route::controller(\App\Http\Controllers\ExerciseController::class)->prefix('exercises')->group(function () {
-        Route::get('','index')->name('allExercises');
-        Route::get('/{id}', 'lesson_exercise')->name('exercises');
+        Route::controller(\App\Http\Controllers\ExerciseController::class)->prefix('exercises')->group(function () {
+        Route::get('/{id}', 'sub_skill_exercise')->name('exercises');
         Route::get('create/{id}', 'create')->name('exercises.create');
         Route::post('store/{id}', 'store')->name('exercises.store');
         Route::get('show/{id}', 'show')->name('exercises.show');

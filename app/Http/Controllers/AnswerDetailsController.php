@@ -82,7 +82,8 @@ class AnswerDetailsController extends Controller
 
          $exercisecon = new ExerciseController();
          $exercise = Exercise::find($exercise_id) ;
-         return $exercisecon->lesson_exercise($exercise->lesson_id) ;
+
+         return $exercisecon->sub_skill_exercise($exercise->sub_skill_id) ;
     }
 
 

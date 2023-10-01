@@ -16,10 +16,6 @@ return new class extends Migration
             $table->foreignId('exercise_id')->constrained('exercises')
                 ->onDelete('cascade');
 
-            $table->foreignId('lesson_id')->constrained('lessons') ;
-
-            $table->foreignId('course_id')->constrained('courses') ;
-
             $table->text('text');
 
             $table->boolean('is_correct')->default(false);

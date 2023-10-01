@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\URL;
 
 class ExerciseController extends Controller
 {
+
     public function search(Request $request)
     {
         $query = Exercise::query();
@@ -20,15 +21,11 @@ class ExerciseController extends Controller
         return view('exercises.allExercises', compact('exercises'));
     }
 
-    public function index()
-    {
-        $exercises = Exercise::orderBy('created_at', 'DESC')->get();
-        return view('exercises.allExercises', compact('exercises'));
-    }
 
-    public function lesson_exercise($id)
+
+    public function sub_skill_exercise($id)
     {
-        $exercises = Exercise::where('lesson_id' , $id)->orderBy('created_at', 'DESC')->get();
+        $exercises = Exercise::where('sub_skill_id' , $id)->orderBy('created_at', 'DESC')->get();
 
         return view('exercises.index', compact(['exercises' , 'id']));
     }
@@ -38,7 +35,7 @@ class ExerciseController extends Controller
         return view('exercises.create' , compact('id'));
     }
 
-    public function store(Request $request , $lesson_id)
+    public function store(Request $request , $sub_skill_id)
     {
         $imagePath = null;
         $audioPath = null;
@@ -81,9 +78,8 @@ class ExerciseController extends Controller
 
 // Initialize base data
         $data = [
-            'type' => $request['type'],
             'content' => $request['content'],
-            'lesson_id' => $lesson_id,
+            'sub_skill_id' => $sub_skill_id,
             'xp' => $request['xp']
         ];
 
@@ -97,7 +93,7 @@ class ExerciseController extends Controller
 
         Exercise::create($data);
 
-        return $this->lesson_exercise($lesson_id);
+        return $this->sub_skill_exercise($sub_skill_id);
     }
 
     public function show($id)
@@ -120,15 +116,15 @@ class ExerciseController extends Controller
 
         $exercise->update($request->all());
 
-        return redirect()->route('exercises', ['id' => $exercise->lesson_id])->with('success', 'Lesson updated successfully');
+        return redirect()->route('exercises', ['id' => $exercise->sub_skill_id])->with('success', 'Skill updated successfully');
     }
 
     public function destroy( $id)
     {
         $exercise = Exercise::findOrFail($id);
-        $lesson_id = $exercise->lesson_id ;
+        $sub_skill_id = $exercise->sub_skill_id ;
         $exercise->delete();
 
-        return $this->lesson_exercise($lesson_id);
+        return $this->sub_skill_exercise($sub_skill_id);
     }
 }

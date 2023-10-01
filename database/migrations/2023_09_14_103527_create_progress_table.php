@@ -14,11 +14,12 @@ return new class extends Migration
     {
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')
+            $table->foreignId('user_id')->constrained('mobile_users')
               ->onDelete('cascade');
 
-            $table->foreignId('lesson_id')->constrained('lessons') ;
+            $table->foreignId('sub_skill_id')->constrained('sub_skills') ;
 
+            $table->index('sub_skill_id') ;
 
             $table->timestamps();
         });

@@ -17,9 +17,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')
                 ->onDelete('cascade');
 
-            $table->foreignId('course_id')->constrained('courses')
+            $table->foreignId('level_id')->constrained('levels')
                 ->onDelete('cascade');
 
+            $table->index('level_id') ;
+            $table->index('user_id') ;
 
             $table->timestamps();
         });

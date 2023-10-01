@@ -104,8 +104,36 @@ class AuthController extends Controller
             $user = MobileUser::create([
                 'user_name' => $googleUser->getName(),
                 'email' => $googleUser->getEmail(),
-                // You can add more fields as per your user model
+                'google_id' => $googleUser->getId()
             ]);
+        }
+
+        // Generate a bearer token for the user
+        $token = $user->createToken('api')->plainTextToken;
+
+        // Return the token to the user or perform any desired redirect or response
+        return response()->json(['token' => $token]);
+    }
+
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleFacebookCallback()
+    {
+        $googleUser = Socialite::driver('facebook')->user();
+
+        // Check if the user already exists in your database
+        $user = MobileUser::where('email', $googleUser->getEmail())->first();
+
+        if (!$user) {
+
+            $user = MobileUser::create([
+                'user_name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+            ]);
+
         }
 
         // Generate a bearer token for the user

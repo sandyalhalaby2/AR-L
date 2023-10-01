@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Requests\Lesson\StoreLessonRequest;
-use App\Models\Lesson;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -13,11 +13,11 @@ class LessonController extends Controller
     public function store(StoreLessonRequest $request)
     {
         try {
-            $lesson = Lesson::create($request->all());
+            $lesson = Skill::create($request->all());
             return response()->json([
                 'status' => true,
                 'lesson' => $lesson ,
-                'message' => 'Lesson Created Successfully'
+                'message' => 'Skill Created Successfully'
             ]);
         } catch (\Exception $exception) {
             return response()->json([
@@ -30,11 +30,11 @@ class LessonController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $lesson = Lesson::findOrFail($id);
+            $lesson = Skill::findOrFail($id);
             $lesson->update($request->all());
             return response()->json([
                 'status' => true,
-                'message' => 'Lesson updated successfully',
+                'message' => 'Skill updated successfully',
                 'lesson' => $lesson
             ]);
         } catch (ModelNotFoundException $ex) {
@@ -48,11 +48,11 @@ class LessonController extends Controller
     public function destroy($id)
     {
         try {
-            $lesson = Lesson::findOrFail($id);
+            $lesson = Skill::findOrFail($id);
             $lesson->delete();
             return response()->json([
                 'status' => true,
-                'message' => 'Lesson deleted successfully'
+                'message' => 'Skill deleted successfully'
             ]);
         } catch (ModelNotFoundException $ex) {
             return response()->json([

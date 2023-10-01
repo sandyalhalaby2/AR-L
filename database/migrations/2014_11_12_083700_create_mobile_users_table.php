@@ -31,6 +31,7 @@ return new class extends Migration
 
             $table->integer('xp')->default(0) ;
 
+            $table->rememberToken();
             $table->timestamps();
         });
     }

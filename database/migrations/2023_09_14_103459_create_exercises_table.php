@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('lesson_id')->constrained('lessons')
+            $table->foreignId('sub_skill_id')->constrained('sub_skills')
                 ->onDelete('cascade');
-
-            $table->enum('type' , ['translation' ,'listening' , 'sentenceFormation' ,'multipleChoice' ]) ;
 
             $table->text('content') ;
 
@@ -27,6 +25,7 @@ return new class extends Migration
 
             $table->string('image_link')->nullable();
 
+            $table->index('sub_skill_id') ;
             $table->timestamps();
         });
     }

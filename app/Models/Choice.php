@@ -18,7 +18,7 @@ class Choice extends Model
 
     public function lesson()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(Skill::class);
     }
 
     public function course()

@@ -7,10 +7,6 @@
     <hr />
     <div class="row">
         <div class="col mb-3">
-            <label class="form-label">Type</label>
-            <input type="text" name="type" class="form-control" placeholder="Type" value="{{ $exercise->type }}" readonly>
-        </div>
-        <div class="col mb-3">
             <label class="form-label">Xp</label>
             <input type="text" name="xp" class="form-control" placeholder="Xp" value="{{ $exercise->xp }}" readonly>
         </div>

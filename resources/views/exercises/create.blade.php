@@ -9,15 +9,6 @@
         @csrf
         <div class="row mb-3">
             <div class="col mb-3">
-                <select name="type" required class="form-control">
-                    <option value="" disabled selected>Select Type</option>
-                    <option value="translation">Translation</option>
-                    <option value="listening">Listening</option>
-                    <option value="sentenceFormation">sentenceFormation</option>
-                    <option value="multipleChoice">multipleChoice</option>
-                </select>
-            </div>
-            <div class="col mb-3">
                 <input type="text" class="form-control"  name="xp" placeholder="XP" pattern="\d+" required>
             </div>
         </div>
