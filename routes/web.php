@@ -34,26 +34,19 @@ Route::middleware('auth')->group(function () {
 
 
 
+
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
     Route::post('/profile',[AuthController::class , 'update'])->name('profile.update');
 
+
     Route::controller(\App\Http\Controllers\LevelController::class)->prefix('levels')->group(function () {
         Route::get('', 'index')->name('levels');
-        Route::get('create', 'create')->name('levels.create');
-        Route::post('store', 'store')->name('levels.store');
-        Route::get('show/{id}', 'show')->name('levels.show');
-        Route::get('edit/{id}', 'edit')->name('levels.edit');
-        Route::put('edit/{id}', 'update')->name('levels.update');
-        Route::delete('destroy/{id}', 'destroy')->name('levels.destroy');
     });
-
-
 
 
     Route::controller(\App\Http\Controllers\SkillController::class)->prefix('skills')->group(function () {
         Route::get('','index')->name('allSkills');
         Route::get('/{id}','level_skill')->name('skills');
-        Route::post('search', 'search')->name('skills.search') ;
     });
 
     Route::controller(\App\Http\Controllers\SubSkillController::class)->prefix('sub_skills')->group(function () {
@@ -64,7 +57,6 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'edit')->name('sub_skills.edit');
         Route::put('edit/{id}', 'update')->name('sub_skills.update');
         Route::delete('destroy/{id}', 'destroy')->name('sub_skills.destroy');
-
     });
 
 
@@ -76,8 +68,6 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'edit')->name('exercises.edit');
         Route::put('edit/{id}', 'update')->name('exercises.update');
         Route::delete('destroy/{id}', 'destroy')->name('exercises.destroy');
-        Route::post('search', 'search')->name('exercises.search') ;
-
     });
 
 
@@ -97,8 +87,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(\App\Http\Controllers\UserController::class)->prefix('users')->group(function () {
         Route::get('/', 'index')->name('users');
         Route::post('/block/{id}' ,'block')->name('users.block') ;
-        Route::post('search', 'search')->name('users.search') ;
-
+        Route::get('search', 'search')->name('users.search') ;
     });
 
 

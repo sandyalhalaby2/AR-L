@@ -12,82 +12,106 @@ use Illuminate\Support\Facades\URL;
 
 class ProfileController extends Controller
 {
-
-
+    /**
+     * Retrieve the profile of the currently authenticated user.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function profile()
     {
         try
         {
-            $id = Auth::id() ;
-            $user = MobileUser::find($id) ;
+            // Get the ID of the currently authenticated user
+            $id = Auth::id();
+            // Find the user by ID
+            $user = MobileUser::find($id);
 
+            // Return the user data as JSON
             return response()->json([
                 'user' => $user
-            ]) ;
+            ]);
 
         } catch (\Exception $exception)
         {
-            return response() -> json([
-                'status' => false  ,
-                'message' => $exception->getMessage() ,
-            ] ) ;
+            // Handle exceptions and return error message as JSON
+            return response()->json([
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ]);
         }
     }
 
-
+    /**
+     * Retrieve the profile of a user by ID.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function GetUser($id)
     {
         try {
+            // Find the user by ID
             $user = MobileUser::find($id);
             if ($user)
             {
+                // Return the user data as JSON
                 return response()->json([
                     'user' => $user
                 ], 201);
-            }else {
-                return \response()->json([
+            } else {
+                // Return error message if user does not exist
+                return response()->json([
                     'message' => 'User Not Exist'
                 ]);
             }
-        }catch (\Exception $exception)
+        } catch (\Exception $exception)
         {
-            return response() -> json([
-                'status' => false  ,
-                'message' => $exception->getMessage() ,
-            ] ) ;
+            // Handle exceptions and return error message as JSON
+            return response()->json([
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ]);
         }
     }
 
-
+    /**
+     * Insert an image for the currently authenticated user.
+     *
+     * @param  \App\Http\Requests\Image\ImageRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function User_insert_image(ImageRequest $request)
     {
-
         try
         {
-            $user_id = Auth::id() ;
+            // Get the ID of the currently authenticated user
+            $user_id = Auth::id();
+            // Find the user by ID
+            $user = \App\Models\MobileUser::find($user_id);
 
-            $user= \App\Models\MobileUser::find($user_id)  ;
+            $Image = new ImageController();
 
-            $Image = new ImageController() ;
-
-            if ($user['image']!=null)
+            // If the user has an image, delete it from storage
+            if ($user['image'] != null)
             {
-                $Image->delete_image_from_Storage($user['image']) ;
+                $Image->delete_image_from_Storage($user['image']);
             }
 
-            $path = $Image->store_image_User($request) ;
+            // Store the new user image and get the path
+            $path = $Image->store_image_User($request);
 
-            //create Object in Database
+            // Update the user's profile picture in the database
             $user->update(['profile_picture' => URL::asset('storage/' . $path)]);
 
+            // Return success message as JSON
             return response()->json([
-                    'status' => true ,
-                    'message' => 'Image are inserted Successfully' ,
-                ]) ;
+                'status' => true,
+                'message' => 'Image are inserted Successfully',
+            ]);
 
         } catch(\Exception $exception)
         {
-
+            // Handle exceptions and return error message as JSON
             return response()->json([
                 'status' => false,
                 'message' => $exception->getMessage()
@@ -95,9 +119,8 @@ class ProfileController extends Controller
         }
     }
 
-
     /**
-     * Update the specified resource in storage.
+     * Update the profile of the currently authenticated user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -105,18 +128,21 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         try {
-
+            // Get the currently authenticated user
             $user = Auth::user();
+            // Update the user data
             $user->update($request->all());
 
+            // Return success message and updated user data as JSON
             return response()->json([
                 'status' => true,
-                'message' => 'User has been Updated Successfully' ,
+                'message' => 'User has been Updated Successfully',
                 'user' => $user
             ]);
 
-        }catch (\Exception $exception)
+        } catch (\Exception $exception)
         {
+            // Handle exceptions and return error message as JSON
             return response()->json([
                 'status' => false,
                 'message' => $exception->getMessage()
@@ -124,51 +150,60 @@ class ProfileController extends Controller
         }
     }
 
-
     /**
-     * Remove the specified resource from storage.
+     * Delete the profile of the currently authenticated user.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy()
     {
         try
         {
-                $user = Auth::user() ;
-                $user->delete();
-                $reg = new RegisterController() ;
+            // Get the currently authenticated user
+            $user = Auth::user();
+            // Delete the user
+            $user->delete();
+            $reg = new RegisterController();
 
-                $reg->LogOut() ;
+            // Log the user out
+            $reg->LogOut();
 
-                return response()->json([
-                    'status' => true,
-                    'message' => 'User has been deleted successfully'
-                ]);
+            // Return success message as JSON
+            return response()->json([
+                'status' => true,
+                'message' => 'User has been deleted successfully'
+            ]);
 
         } catch (\Exception $exception)
         {
-            return  response()->json([
-                'status' => false ,
+            // Handle exceptions and return error message as JSON
+            return response()->json([
+                'status' => false,
                 'message' => $exception->getMessage()
-            ]) ;
+            ]);
         }
     }
 
-
+    /**
+     * Reset the password of the currently authenticated user.
+     *
+     * @param  \App\Http\Requests\ForgotPassword\ResetPasswordRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function resetPassword(ResetPasswordRequest $request)
     {
-
+        // Get the currently authenticated user
         $user = Auth::user();
 
+        // Check if the old password is correct
         if (!Hash::check($request->old_password, $user->password)) {
             return response()->json(['error' => 'password is incorrect.'], 422);
         }
 
+        // Update the user's password
         $user->updatePassword($request->new_password);
 
+        // Return success message as JSON
         return response()->json(['message' => 'Password has been updated.']);
     }
-
-
 }
