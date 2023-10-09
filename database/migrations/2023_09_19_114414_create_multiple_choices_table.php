@@ -20,11 +20,11 @@ return new class extends Migration
 
             $table->text('question');
 
-            $table->string('option_1');
-            $table->string('option_2');
-            $table->string('option_3');
-            $table->string('option_4')->nullable();
-            $table->string('option_5')->nullable();
+            $table->json('option_1');
+            $table->json('option_2');
+            $table->json('option_3');
+            $table->json('option_4')->nullable();
+            $table->json('option_5')->nullable();
 
             $table->enum('isCorrect' , ['option_1' , 'option_2' , 'option_3' , 'option_4' , 'option_5']) ;
 

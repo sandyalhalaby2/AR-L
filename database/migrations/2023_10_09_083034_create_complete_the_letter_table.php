@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('true_or_false', function (Blueprint $table) {
+        Schema::create('complete_the_letter', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('exercise_id')->nullable();
-            $table->foreign('exercise_id')->references('id')->on('exercises')->onDelete('cascade');
-
+            $table->foreignId('exercise_id')->constrained('exercises')->onDelete('cascade') ;
             $table->text('question') ;
-            $table->boolean('is_true') ;
-
+            $table->text('sentence_with_blank');
+            $table->string('letters');
+            $table->string('sorted_letters');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('true_or_false');
+        Schema::dropIfExists('complete_the_letter');
     }
 };

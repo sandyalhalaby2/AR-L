@@ -35,6 +35,26 @@ class Exercise extends Model
         return $this->hasOne(MatchThePair::class);
     }
 
+    public function trueOrFalse()
+    {
+        return $this->hasOne(TrueorFalse::class);
+    }
+    public function completetheletter()
+    {
+        return $this->hasOne(CompleteTheLetter::class);
+    }
+
+
+    public function hascompletetheletter()
+    {
+        return $this->hasOne(CompleteTheLetter::class)->exists();
+    }
+
+    public function hastrueOrFalse()
+    {
+        return $this->hasOne(TrueorFalse::class)->exists();
+    }
+
     public function hasMultipleChoice(): bool
     {
         return $this->multipleChoice()->exists();
