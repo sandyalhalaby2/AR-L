@@ -93,18 +93,26 @@ class AnswerDetailsController extends Controller
             }
 
             MultipleChoice::create($data);
-        } elseif($request->type == 'fill_in_the_blanks') {
+        }
+        elseif($request->type == 'fill_in_the_blanks') {
             $data['question'] = $data['question_fill'];
             FillInTheBlank::create($data);
-        } elseif($request->type == 'match_the_pairs') {
+        }
+        elseif($request->type == 'match_the_pairs') {
             $data['question'] = $data['question_fill2'];
             MatchThePair::create($data);
-        }elseif($request->type == 'true_or_false')
+        }
+        elseif($request->type == 'true_or_false')
         {
             $data['question'] = $data['question_fill3'] ;
             TrueorFalse::create($data) ;
-        }elseif($request->type == 'complete_the_letter')
+        }
+        elseif($request->type == 'complete_the_letter')
         {
+            $chosen_letters = json_decode($request->input('chosen_letters'), true);
+            $sorted_letters = json_decode($request->input('sorted_letters'), true);
+            $data['letters'] =  implode(' , ' , $chosen_letters);
+            $data['sorted_letters'] =   implode(' , ' , $sorted_letters);
             $data['question'] = $data['question_complete'] ;
             $data['sentence_with_blank'] = $request['sentence_with_blank1'] ;
             CompleteTheLetter::create($data);

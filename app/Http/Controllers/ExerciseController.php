@@ -50,7 +50,19 @@ class ExerciseController extends Controller
 
         // Check if an image file is provided and process it
         if ($request->hasFile('image_link')) {
-            // ... [Image processing code]
+            $image = $request->file('image_link');
+
+            //Get FileName with extension
+            $filenameWithExt = $image->getClientOriginalName();
+
+            //Get FileName without Extension
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+            //Get Extension
+            $Extension = $image->getClientOriginalExtension();
+
+            //New_File_Name
+            $NewfileName = $filename . '_' . time() . '_.' . $Extension;
 
             // Upload Image
             $imagePath = $image->storeAs('images', $NewfileName, 'public');
@@ -58,7 +70,19 @@ class ExerciseController extends Controller
 
         // Check if an audio file is provided and process it
         if ($request->hasFile('audio_link')) {
-            // ... [Audio processing code]
+            $audio = $request->file('audio_link');
+
+            //Get FileName with extension
+            $filenameWithExt = $image->getClientOriginalName();
+
+            //Get FileName without Extension
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+            //Get Extension
+            $Extension = $image->getClientOriginalExtension();
+
+            //New_File_Name
+            $NewfileName = $filename . '_' . time() . '_.' . $Extension;
 
             $audioPath = $audio->storeAs('audios', $NewfileName, 'public');
         }
